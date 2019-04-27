@@ -104,7 +104,7 @@ http.createServer(app).listen(1337, () => {
 	console.log('Express server listening on port 1337');
 });
 
-const publicDirectoryPath = path.join(__dirname, '../client/');
+const publicDirectoryPath = path.join(__dirname, '../public/');
 app.use(express.static(publicDirectoryPath));
 
 app.use(express.json());
