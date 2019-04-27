@@ -8,6 +8,7 @@ require('./db/mongoose');
 const userRouter = require('./routers/userRouter');
 const userTask = require('./routers/taskRouter');
 const User = require('./models/user');
+const Contact = require('./models/contact');
 const { verifiedSafeEmail } = require('./emails/account.js');
 
 const app = express();
@@ -41,7 +42,7 @@ app.post('/voice', (request, res) => {
 				(error, doc) => {
 					console.log(doc);
 					console.log('User safe.');
-					verifiedUserEmail(
+					verifiedSafeEmail(
 						doc.name,
 						doc.email,
 						doc.phone,
@@ -74,7 +75,7 @@ app.post('/sms', (req, res) => {
 	if (lowerCaseResponse.includes('yes')) {
 		twiml.message('Thank you for confirming..');
 
-		User.findOneAndUpdate(
+		Contact.findOneAndUpdate(
 			{ phone: parsedPhone },
 			{ $set: { safe: true } },
 			(error, doc) => {
