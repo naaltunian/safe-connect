@@ -12,6 +12,7 @@ const Video = () => {
         </div>
         <h1>Making sure we're safely connected to our loved ones.</h1>
         <div className="white-bar">
+        <div className="white-bottom"></div>
         <div className="login-box">
             <h2>Log In</h2>
         </div>
