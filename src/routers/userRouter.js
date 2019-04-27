@@ -11,7 +11,6 @@ const {
 const multer = require('multer');
 const sharp = require('sharp');
 
-
 // Route for creating a new user
 router.post('/users', async (req, res) => {
 	const user = new User(req.body);

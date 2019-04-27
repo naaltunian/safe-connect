@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			trim: true
 		},
-		country: {
+		location: {
 			type: String,
 			required: false,
 			trim: true,
