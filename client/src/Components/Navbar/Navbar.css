@@ -1,9 +1,15 @@
 .navbar {
     display: flex;
-    background-color:#98ff98;
     /* color: white; */
     align-items: center;
     height: 10vh;
+    /* Krystal changes start */
+    position: fixed;
+    top: 0; 
+    width: 100%;
+    /*border is for size purposes*/
+    border-style: solid; 
+    border-color: #98ff98;    
 }
 
 .logo {
