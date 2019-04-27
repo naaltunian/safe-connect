@@ -37,15 +37,15 @@ class Login extends React.Component {
             <div>
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Email: 
+                        Email:
                         <input type="text" name="email" value={this.state.email} onChange={this.handleChange} />
                     </label>
-                    <label>
-                        Password: 
+                    <label> 
+                        Password:
                         <input type="text" name="password" value={this.state.password} onChange={this.handleChange} />
                     </label>
                    <button type="submit" value="Submit" onClick={this.handleSubmit}>Submit</button>
-                   <Link to='/dashboard'>Submit</Link>
+                   <Link to='/dashboard'></Link>
                 </form>
             </div>
         )
