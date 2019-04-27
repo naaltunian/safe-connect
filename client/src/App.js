@@ -1,5 +1,6 @@
 import React from 'react';
 import  Navbar from './Components/Navbar/Navbar';
+import  Video from './Components/Video/Video';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
@@ -7,6 +8,7 @@ class App extends React.Component {
     return(
       <Router>
         <Navbar />
+        <Video />
 
         
       </Router>
