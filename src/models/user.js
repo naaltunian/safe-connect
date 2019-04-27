@@ -6,7 +6,12 @@ const Task = require('./task');
 
 const userSchema = new mongoose.Schema(
 	{
-		name: {
+		firstName: {
+			type: String,
+			required: true,
+			trim: true
+		},
+		lastName: {
 			type: String,
 			required: true,
 			trim: true
@@ -34,14 +39,26 @@ const userSchema = new mongoose.Schema(
 				}
 			}
 		},
-		age: {
+		phone: {
 			type: Number,
-			default: 0,
-			validate(value) {
-				if (value < 0) {
-					throw new Error('Age must be a postive number');
-				}
-			}
+			required: true,
+			minlength: 10,
+			trim: true
+		},
+		birthday: {
+			type: String,
+			required: true,
+			trim: true
+		},
+		country: {
+			type: String,
+			required: false,
+			trim: true,
+			lowercase: true
+		},
+		safe: {
+			type: Boolean,
+			default: undefined
 		},
 		tokens: [
 			{

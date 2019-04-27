@@ -8,7 +8,6 @@ class App extends React.Component {
     return(
       <Router>
         <Navbar />
-        <Registration />
         
       </Router>
     )
