@@ -78,20 +78,7 @@
     text-shadow: 1px 1px 1px #16a085, 1px 1px 4px #2980b9;
     text-align: center;
   }
-  
-  button {
-    position: relative;
-    border-radius: 5px;
-    border: 0;
-    font-size: 1.5rem;
-    font-family: Oswald, sans-serif;
-    color: #fff;
-    background-color: #2980b9;
-    padding: .4em;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
+
   
   button:hover {
     background-color: #3498db;
