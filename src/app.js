@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const http = require('http');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
@@ -12,7 +13,7 @@ const { verifiedUserEmail } = require('./emails/account.js');
 const app = express();
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(cors())
 app.post('/voice', (request, res) => {
 	// Use the Twilio Node.js SDK to build an XML response
 

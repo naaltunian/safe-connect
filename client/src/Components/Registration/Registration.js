@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class Registration extends React.Component  {
 
@@ -7,8 +8,10 @@ class Registration extends React.Component  {
             firstName: '',
             lastName: '',
             email: '',
-            telephone: '',
+            phone: '',
             country: '',
+            password: '',
+            safe: true,
             error: false,
             disabled: true
         }
@@ -40,12 +43,26 @@ class Registration extends React.Component  {
     onSubmit = async e => {
         e.preventDefault();
         if(this.validateEmail(this.state.email)) {
-          console.log(this.state.email)
-          this.setState({
-              email: "",
-              error: false,
-              disabled: false
-          });
+          const user = {
+              firstName: this.state.firstName,
+              lastName:  this.state.lastName,
+              phone: this.state.phone,
+              birthday: this.state.birthday,
+              email:     this.state.email,
+              country:   this.state.country,
+              safe:      true,
+              password:  this.state.password
+          }
+          
+          axios.post('http://localhost:5000/users', { user }, {
+              headers: {"Access-Control-Allow-Origin": "*"}
+          })
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
         } else {
             console.log('Error')
             this.setState({
@@ -70,15 +87,19 @@ class Registration extends React.Component  {
                     </label>
                     <label>
                         email:
-                        <input type="email" name="email" value={this.state.email} onChange={this.handleEmail} />
+                        <input type="text" name="email" value={this.state.email} onChange={this.handleEmail} />
                     </label>
                     <label>
-                        Birthdate:
-                        <input type="text" name="birthdate" value={this.state.birthdate} onChange={this.handleChange} />
+                        Password:
+                        <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
                     </label>
                     <label>
-                        Telephone:
-                        <input type="text" name="telephone" value={this.state.telephone} onChange={this.handleChange} />
+                        Birthday:
+                        <input type="text" name="birthday" value={this.state.birthday} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Phone:
+                        <input type="text" name="phone" value={this.state.phone} onChange={this.handleChange} />
                     </label>
                     <label>
                         Country:
