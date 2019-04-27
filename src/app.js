@@ -17,7 +17,10 @@ app.post('/voice', (request, res) => {
 	// Use the Twilio Node.js SDK to build an XML response
 
 	const twiml = new VoiceResponse();
-	twiml.say({ voice: 'alice' }, 'Hello, press 1 to say you are safe.');
+	twiml.say(
+		{ voice: 'alice' },
+		'Hello, press 1 to say you are safe. 9 to opt out.'
+	);
 	// console.log(request.body);
 	let parsedPhone = request.body.From.slice(2, 12);
 	console.log(parsedPhone);
@@ -51,7 +54,7 @@ app.post('/voice', (request, res) => {
 		} else if (userInput == '9') {
 			console.log('Goodbye');
 		} else {
-			console.log('I said one or fucking two dumbass');
+			console.log('One or two please');
 		}
 	}
 
@@ -70,9 +73,7 @@ app.post('/sms', (req, res) => {
 	// console.log(parsedPhone)
 	console.log(req.body);
 	if (lowerCaseResponse.includes('yes')) {
-		twiml.message(
-			'Thank you for confirming.  One of our licensed and insured installers will be contacting you shortly.'
-		);
+		twiml.message('Thank you for confirming.  .');
 
 		User.findOneAndUpdate(
 			{ phone: parsedPhone },
