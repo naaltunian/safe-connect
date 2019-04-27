@@ -1,6 +1,7 @@
 import React from 'react';
 import './Video.css';
 import { Link } from 'react-router-dom';
+import Login from '../Login/Login';
 
 const Video = () => {
     return(
@@ -14,7 +15,7 @@ const Video = () => {
         <div className="white-bar">
         <div className="white-bottom"></div>
         <div className="login-box">
-            <h2>Log In</h2>
+            <Login />
         </div>
         </div>
         </div>

@@ -8,7 +8,7 @@ class Dashboard extends React.Component {
             <div>
                 <h1>Dashboard</h1>
                 <Link to="/contacts">Contacts</Link>
-                <Link to="/add-contact">Add Contact</Link>
+                <Link to="/add-contacts">Add Contact</Link>
                 <Link to="/status" >Status</Link>
             </div>
         )
