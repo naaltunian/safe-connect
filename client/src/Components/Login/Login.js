@@ -2,6 +2,7 @@ import React from 'react';
 import './Login.css';
 import { userInfo } from 'os';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 class Login extends React.Component {
 
@@ -43,7 +44,8 @@ class Login extends React.Component {
                         Password: 
                         <input type="text" name="password" value={this.state.password} onChange={this.handleChange} />
                     </label>
-                    <button type="submit" value="Submit" onClick={this.handleSubmit}>Submit</button>
+                   <button type="submit" value="Submit" onClick={this.handleSubmit}>Submit</button>
+                   <Link to='/dashboard'>Submit</Link>
                 </form>
             </div>
         )
