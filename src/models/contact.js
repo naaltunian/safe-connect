@@ -3,21 +3,45 @@ const mongoose = require('mongoose');
 
 const contactSchema = new mongoose.Schema(
 	{
-		name: {
+		firstName: {
 			type: String,
 			required: true,
 			trim: true
 		},
-		description: {
+		lastName: {
 			type: String,
-			trim: true,
-			required: true
+			required: true,
+			trim: true
 		},
-		number: {
+		email: {
 			type: String,
+			unique: true,
+			required: true,
 			trim: true,
-			required: true
+			lowercase: true,
+			validate(value) {
+				if (!validator.isEmail(value)) {
+					throw new Error('Email is invalid');
+				}
+			}
 		},
+		phone: {
+			type: String,
+			required: true,
+			minlength: 10,
+			trim: true
+		},
+		location: {
+			type: String,
+			required: false,
+			trim: true,
+			lowercase: true
+		},
+		safe: {
+			type: Boolean,
+			default: undefined
+		},
+
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,

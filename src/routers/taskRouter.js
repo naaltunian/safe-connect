@@ -16,7 +16,7 @@ router.post('/contacts', auth, async (req, res) => {
 		res.status(400).send(e);
 	}
 });
-
+// Route to get all contacts
 router.get('/contacts', auth, async (req, res) => {
 	const match = {};
 	const sort = {};
@@ -64,14 +64,19 @@ router.get('/contacts/:id', auth, async (req, res) => {
 router.patch('/contacts/:id', auth, async (req, res) => {
 	const updates = Object.keys(req.body);
 	const allowedUpdates = ['description', 'completed'];
-	const isValidOperation = updates.every(update => allowedUpdates.includes(update));
+	const isValidOperation = updates.every(update =>
+		allowedUpdates.includes(update)
+	);
 
 	if (!isValidOperation) {
 		return res.status(400).send({ error: 'Invalid updates!' });
 	}
 
 	try {
-		const contact = await Contact.findOne({ _id: req.params.id, owner: req.user._id });
+		const contact = await Contact.findOne({
+			_id: req.params.id,
+			owner: req.user._id
+		});
 
 		if (!contact) {
 			return res.status(404).send();
@@ -87,7 +92,10 @@ router.patch('/contacts/:id', auth, async (req, res) => {
 
 router.delete('/contacts/:id', auth, async (req, res) => {
 	try {
-		const contact = await Contact.findOneAndDelete({ _id: req.params.id, owner: req.user._id });
+		const contact = await Contact.findOneAndDelete({
+			_id: req.params.id,
+			owner: req.user._id
+		});
 		if (!contact) {
 			return res.status(404).send();
 		}

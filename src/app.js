@@ -8,17 +8,18 @@ require('./db/mongoose');
 const userRouter = require('./routers/userRouter');
 const userTask = require('./routers/taskRouter');
 const User = require('./models/user');
-const { verifiedUserEmail } = require('./emails/account.js');
+const { verifiedSafeEmail } = require('./emails/account.js');
 
 const app = express();
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors())
+app.use(cors());
+
 app.post('/voice', (request, res) => {
 	// Use the Twilio Node.js SDK to build an XML response
 
 	const twiml = new VoiceResponse();
-	twiml.say({ voice: 'alice' }, 'Hello, press 1 to confirm, and 9 to opt out.');
+	twiml.say({ voice: 'alice' }, 'Hello, press 1 to confirm you are safe.');
 	// console.log(request.body);
 	let parsedPhone = request.body.From.slice(2, 12);
 	console.log(parsedPhone);
@@ -36,10 +37,10 @@ app.post('/voice', (request, res) => {
 		if (userInput !== null && userInput == '1') {
 			User.findOneAndUpdate(
 				{ phone: parsedPhone },
-				{ $set: { verified: true } },
+				{ $set: { safe: true } },
 				(error, doc) => {
 					console.log(doc);
-					console.log('User verified.');
+					console.log('User safe.');
 					verifiedUserEmail(
 						doc.name,
 						doc.email,
@@ -78,14 +79,18 @@ app.post('/sms', (req, res) => {
 			{ $set: { safe: true } },
 			(error, doc) => {
 				console.log(doc);
-				console.log('User verified.');
-				// verifiedUserEmail(doc.name, doc.email, doc.phone, doc.zipcode, doc._id);
+				console.log('Contact verified as safe.');
+				verifiedSafeEmail(
+					doc.firstName,
+					doc.email,
+					doc.phone,
+					doc.zipcode,
+					doc._id
+				);
 			}
 		);
 	} else if (lowerCaseResponse.includes('no')) {
-		twiml.message(
-			'Sorry for the inconvenience, please reach out again if you change your mind.'
-		);
+		twiml.message('Oh dam, that sucks.');
 	} else {
 		twiml.message('Say if you are safe or not please.');
 	}
