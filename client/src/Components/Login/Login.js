@@ -35,15 +35,14 @@ class Login extends React.Component {
     render() {
         return(
             <div>
+                <h2>Login Now</h2>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Email:
+                    <label>Email:</label>
                         <input type="text" name="email" value={this.state.email} onChange={this.handleChange} />
-                    </label>
-                    <label> 
-                        Password:
+                 
+                    <label>Password:</label>
                         <input type="text" name="password" value={this.state.password} onChange={this.handleChange} />
-                    </label>
+                   
                    <button type="submit" value="Submit" onClick={this.handleSubmit}>Submit</button>
                    <Link to='/dashboard'></Link>
                 </form>
