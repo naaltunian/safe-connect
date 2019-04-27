@@ -1,16 +1,22 @@
 const mongoose = require('mongoose');
 // const validator = require('validator');
 
-const taskSchema = new mongoose.Schema(
+const contactSchema = new mongoose.Schema(
 	{
+		name: {
+			type: String,
+			required: true,
+			trim: true
+		},
 		description: {
 			type: String,
 			trim: true,
 			required: true
 		},
-		completed: {
-			type: Boolean,
-			default: false
+		number: {
+			type: String,
+			trim: true,
+			required: true
 		},
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -23,7 +29,7 @@ const taskSchema = new mongoose.Schema(
 	}
 );
 
-const Task = new mongoose.model('Task', taskSchema);
+const Contact = new mongoose.model('Contact', contactSchema);
 
 // const task = new Task({
 // 	description: 'Learn Node and Mongo   '
@@ -38,4 +44,4 @@ const Task = new mongoose.model('Task', taskSchema);
 // 		console.log('Error: ', error);
 // 	});
 
-module.exports = Task;
+module.exports = Contact;
