@@ -7,7 +7,7 @@ const sendWelcomeEmail = (email, name) => {
 		to: email,
 		from: 'info@leopolicastro.com',
 		subject: 'Welcome!',
-		text: `Welcome to SefeConnect ${name}..`
+		text: `Welcome to SafeConnect ${name}..`
 		// html: ''I can place html tags and elements inside this field
 	});
 };
