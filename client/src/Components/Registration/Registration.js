@@ -54,7 +54,7 @@ class Registration extends React.Component  {
               password:  this.state.password
           }
           
-          axios.post('http://localhost:5000/users', { user }, {
+          axios.post('http://localhost:5000/users', user, {
               headers: {"Access-Control-Allow-Origin": "*"}
           })
             .then(res => {
@@ -65,11 +65,6 @@ class Registration extends React.Component  {
             });
         } else {
             console.log('Error')
-            this.setState({
-                email: "",
-                error: true,
-                disabled: true
-          })
         }
     };
 
