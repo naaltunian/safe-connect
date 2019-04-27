@@ -1,0 +1,27 @@
+{
+  "name": "safe-connect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.5.4",
+    "multer": "^1.4.1",
+    "sharp": "^0.22.1",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^8.0.2",
+    "nodemon": "^1.18.11"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "env-cmd ./config/dev.env nodemon src/index.js",
+    "test": "env-cmd ./config/test.env jest --watchAll --runInBand"
+  },
+  "author": "",
+  "license": "ISC"
+}
