@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const http = require('http');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
@@ -12,12 +13,12 @@ const { verifiedUserEmail } = require('./emails/account.js');
 const app = express();
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(cors())
 app.post('/voice', (request, res) => {
 	// Use the Twilio Node.js SDK to build an XML response
 
 	const twiml = new VoiceResponse();
-	twiml.say({ voice: 'alice' }, 'Hello, press 1 to say you are safe.');
+	twiml.say({ voice: 'alice' }, 'Hello, press 1 to confirm, and 9 to opt out.');
 	// console.log(request.body);
 	let parsedPhone = request.body.From.slice(2, 12);
 	console.log(parsedPhone);
@@ -38,7 +39,7 @@ app.post('/voice', (request, res) => {
 				{ $set: { verified: true } },
 				(error, doc) => {
 					console.log(doc);
-					console.log('User safe.');
+					console.log('User verified.');
 					verifiedUserEmail(
 						doc.name,
 						doc.email,
@@ -70,17 +71,15 @@ app.post('/sms', (req, res) => {
 	// console.log(parsedPhone)
 	console.log(req.body);
 	if (lowerCaseResponse.includes('yes')) {
-		twiml.message(
-			'Thank you for confirming.  One of our licensed and insured installers will be contacting you shortly.'
-		);
+		twiml.message('Thank you for confirming..');
 
 		User.findOneAndUpdate(
 			{ phone: parsedPhone },
-			{ $set: { verified: true } },
+			{ $set: { safe: true } },
 			(error, doc) => {
 				console.log(doc);
 				console.log('User verified.');
-				verifiedUserEmail(doc.name, doc.email, doc.phone, doc.zipcode, doc._id);
+				// verifiedUserEmail(doc.name, doc.email, doc.phone, doc.zipcode, doc._id);
 			}
 		);
 	} else if (lowerCaseResponse.includes('no')) {
@@ -88,9 +87,7 @@ app.post('/sms', (req, res) => {
 			'Sorry for the inconvenience, please reach out again if you change your mind.'
 		);
 	} else {
-		twiml.message(
-			'Please enter Yes to receive solar installation quotes or No to opt out.'
-		);
+		twiml.message('Say if you are safe or not please.');
 	}
 
 	res.writeHead(200, { 'Content-Type': 'text/xml' });

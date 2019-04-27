@@ -1,5 +1,5 @@
 const app = require('./app');
-const port = process.env.PORT;
+const port = 5000;
 
 // Uncomment below to put server down for maintenance
 // app.use((req, res, next) => {

@@ -2,11 +2,16 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Task = require('./task');
+const Contact = require('./contact');
 
 const userSchema = new mongoose.Schema(
 	{
-		name: {
+		firstName: {
+			type: String,
+			required: true,
+			trim: true
+		},
+		lastName: {
 			type: String,
 			required: true,
 			trim: true
@@ -34,14 +39,26 @@ const userSchema = new mongoose.Schema(
 				}
 			}
 		},
-		age: {
-			type: Number,
-			default: 0,
-			validate(value) {
-				if (value < 0) {
-					throw new Error('Age must be a postive number');
-				}
-			}
+		phone: {
+			type: String,
+			required: true,
+			minlength: 10,
+			trim: true
+		},
+		birthday: {
+			type: String,
+			required: true,
+			trim: true
+		},
+		country: {
+			type: String,
+			required: false,
+			trim: true,
+			lowercase: true
+		},
+		safe: {
+			type: Boolean,
+			default: undefined
 		},
 		tokens: [
 			{
@@ -60,8 +77,8 @@ const userSchema = new mongoose.Schema(
 	}
 );
 
-userSchema.virtual('tasks', {
-	ref: 'Task',
+userSchema.virtual('contacts', {
+	ref: 'Contact',
 	localField: '_id',
 	foreignField: 'owner'
 });
@@ -116,7 +133,7 @@ userSchema.pre('save', async function(next) {
 // Delete user tasks when user is removed
 userSchema.pre('remove', async function(next) {
 	const user = this;
-	await Task.deleteMany({ owner: user._id });
+	await Contact.deleteMany({ owner: user._id });
 	next();
 });
 
