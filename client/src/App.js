@@ -5,6 +5,7 @@ import Login from './Components/Login/Login';
 import Register from './Components/Registration/Register';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Contacts from './Components/Contacts/Contacts';
+import Footer from './Components/Footer/Footer';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
@@ -19,6 +20,8 @@ class App extends React.Component {
         <Route path="/login" component={Login} />
         <Route path='/dashboard' component={Dashboard} />
         <Route path="/contacts" component={Contacts} />
+        
+        <Footer />
       </Router>
     )
   }
