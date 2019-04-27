@@ -2,6 +2,8 @@ const express = require('express');
 const router = new express.Router();
 const User = require('../models/user');
 const auth = require('../middleware/auth');
+const { accountSid, authToken } = require('../twillio/env');
+const client = require('twilio')(accountSid, authToken);
 const {
 	sendWelcomeEmail,
 	sendCancellationEmail
@@ -15,15 +17,20 @@ router.post('/users', async (req, res) => {
 
 	try {
 		await user.save();
-		sendWelcomeEmail(user.email, user.firstName);
-
+		// sendWelcomeEmail(user.email, user.firstName);
 		const token = await user.generateAuthToken();
 		res.status(201).send({ user, token });
+		client.messages
+			.create({
+				from: '+17864310774',
+				body: 'Are you safe? Please reply yes or no.',
+				to: user.phone
+			})
+			.then(message => console.log(message.sid));
 	} catch (e) {
 		res.status(400).send(e);
 	}
 });
-
 // Route for logging in
 router.post('/users/login', async (req, res) => {
 	try {
